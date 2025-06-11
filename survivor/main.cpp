@@ -1,5 +1,7 @@
 #include<string>
 #include<graphics.h>
+#include<vector>
+#include"player.h"
 
 
 int idx_current_anime = 0;
@@ -40,6 +42,7 @@ void load_animation()
 
 int main() {
 
+	Player player1; //创建玩家1对象
 	load_animation();  //加载人物动画
 	loadimage(&img_background, _T("img/background.png")); //加载背景图
 	initgraph(1280, 720); //初始化界面
@@ -47,9 +50,6 @@ int main() {
 	bool running = true;
 
 	ExMessage msg;
-	
-	
-
 
 	BeginBatchDraw();
 
@@ -57,52 +57,7 @@ int main() {
 
 		DWORD start_time = GetTickCount();
 
-		while (peekmessage(&msg)) {
-
-			if (msg.message == WM_KEYDOWN) {
-				switch (msg.vkcode) {
-				case VK_UP:
-					is_move_up =true;
-					break;
-				case VK_DOWN:
-					is_move_down = true;
-					break;
-				case VK_LEFT:
-					is_move_left = true;
-					break;
-				case VK_RIGHT:
-					is_move_right = true;
-					break;
-				default:
-					break;
-				}
-			}
-			else if(msg.message == WM_KEYUP)
-			{
-				switch (msg.vkcode) {
-				case VK_UP:
-					is_move_up = false;
-					break;
-				case VK_DOWN:
-					is_move_down = false;
-					break;
-				case VK_LEFT:
-					is_move_left = false;
-					break;
-				case VK_RIGHT:
-					is_move_right = false;
-					break;
-				default:
-					break;
-				}
-			}
-		}
-
-		if (is_move_up) player_position.y -= PLAYER_SPEED;
-		if (is_move_down) player_position.y += PLAYER_SPEED;
-		if (is_move_left) player_position.x -= PLAYER_SPEED;
-		if (is_move_right) player_position.x += PLAYER_SPEED;
-
+		player1.move(&msg); //玩家移动
 
 		static int counter = 0;
 		//每五次循环 动画播放一帧
@@ -114,6 +69,9 @@ int main() {
 
 		cleardevice();
 		putimage(0, 0, &img_background); //绘制背景图
+
+		player_position = player1.get_position();
+
 		putimage_alpha(player_position.x, player_position.y, &img_player_left[idx_current_anime]); //绘制人物左移动画
 		FlushBatchDraw();
 
