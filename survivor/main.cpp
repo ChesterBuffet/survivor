@@ -13,10 +13,6 @@ IMAGE  img_background;
 POINT  player_position = { 600,300 };
 
 
-bool is_move_up = false;
-bool is_move_down = false;
-bool is_move_left = false;
-bool is_move_right = false;
 
 
 //修改putimage函数使之实现对虚化背景的处理
