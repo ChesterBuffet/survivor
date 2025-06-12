@@ -1,5 +1,7 @@
 #pragma once
 #include<graphics.h>
+#include<math.h>
+#include"main.h"
 
 
 class Player
@@ -19,8 +21,15 @@ public:
 	void move(ExMessage* msg);
 	//返回人物的位置坐标
 	POINT  get_position() {
-		return position;
+
+		POINT p = position;
+		return p;
 	};
+
+	int  left_right() 
+	{
+		return (is_move_left - is_move_right);
+	}
 	
 
 };
